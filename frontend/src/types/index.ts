@@ -1,8 +1,17 @@
 export type HostKind = "localhost" | "other";
 
-export type ServiceType = 'Web Server' | 'Cache' | 'Database' | 'Web Application' | 'API Service' | 'Worker' | 'Authentication' | 'Payments' | 'Notification'
+export type ServiceType =
+  | "Web Server"
+  | "Cache"
+  | "Database"
+  | "Web Application"
+  | "API Service"
+  | "Worker"
+  | "Authentication"
+  | "Payments"
+  | "Notification";
 
-export type StatusType = 'Running' | 'Degraded' | 'Down'
+export type StatusType = "Running" | "Degraded" | "Down";
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
 
@@ -11,7 +20,8 @@ export function hostKind(hostname: string): HostKind {
 }
 
 export interface ServiceHealthCardsProps {
-  title: string
-  service: ServiceType
-  status: StatusType
+  title: string;
+  service: ServiceType;
+  status: StatusType;
+  id: string;
 }
