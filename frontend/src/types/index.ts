@@ -19,9 +19,9 @@ export function hostKind(hostname: string): HostKind {
   return LOCAL_HOSTS.has(hostname) ? "localhost" : "other";
 }
 
-export interface ServiceSummary {
-  title: string;
-  service: ServiceType;
-  status: StatusType;
+export interface ServiceCard {
   id: string;
+  title: string;
+  description: string;
+  status: StatusType;
 }

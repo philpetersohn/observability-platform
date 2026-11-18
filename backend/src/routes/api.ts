@@ -46,7 +46,14 @@ function parseLimit(value: string | null, fallback: number, maximum: number): nu
 
 function setCors(request: IncomingMessage, response: ServerResponse): void {
   const configured = process.env.CORS_ORIGINS?.split(",").map((value) => value.trim()).filter(Boolean);
-  const allowed = configured?.length ? configured : ["http://localhost:5173", "http://127.0.0.1:5173"];
+  const allowed = configured?.length
+    ? configured
+    : [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+      ];
   const origin = request.headers.origin;
   if (origin && allowed.includes(origin)) {
     response.setHeader("access-control-allow-origin", origin);

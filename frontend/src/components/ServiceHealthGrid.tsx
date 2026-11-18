@@ -1,9 +1,9 @@
 import ServiceHealthCard from "./ServiceHealthCard";
-import type { ServiceSummary } from "../types";
+import type { ServiceCard } from "../types";
 import "./ServiceHealthGrid.css";
 
 interface ServiceHealthGridProps {
-  services: ServiceSummary[];
+  services: ServiceCard[];
 }
 
 export default function ServiceHealthGrid({
@@ -16,7 +16,7 @@ export default function ServiceHealthGrid({
           key={service.id}
           id={service.id}
           title={service.title}
-          service={service.service}
+          description={service.description}
           status={service.status}
         />
       ))}

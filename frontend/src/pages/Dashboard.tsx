@@ -1,4 +1,6 @@
+import ServiceHealthGrid from "../components/ServiceHealthGrid";
 import { useServices } from "../hooks/useServices";
+import { toServiceCard } from "../services/toServiceCard";
 
 export default function Dashboard() {
   const { services, isLoading, error } = useServices();
@@ -11,14 +13,5 @@ export default function Dashboard() {
     return <p>{error}</p>;
   }
 
-  return (
-    <div>
-      Home
-      <ul>
-        {services.map((service) => (
-          <li key={service.id}>{service.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <ServiceHealthGrid services={services.map(toServiceCard)} />;
 }
