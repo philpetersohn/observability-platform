@@ -1,8 +1,9 @@
 import ServiceHealthCard from "./ServiceHealthCard";
-import type { ServiceHealthCardsProps } from "../types";
+import type { ServiceSummary } from "../types";
+import "./ServiceHealthGrid.css";
 
 interface ServiceHealthGridProps {
-  services: ServiceHealthCardsProps[];
+  services: ServiceSummary[];
 }
 
 export default function ServiceHealthGrid({

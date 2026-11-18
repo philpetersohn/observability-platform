@@ -19,7 +19,7 @@ export function hostKind(hostname: string): HostKind {
   return LOCAL_HOSTS.has(hostname) ? "localhost" : "other";
 }
 
-export interface ServiceHealthCardsProps {
+export interface ServiceSummary {
   title: string;
   service: ServiceType;
   status: StatusType;

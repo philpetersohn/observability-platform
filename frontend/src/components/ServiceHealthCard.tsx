@@ -1,7 +1,7 @@
 import "./ServiceHealthCard.css";
-import type { ServiceHealthCardsProps } from "../types";
+import type { ServiceSummary } from "../types";
 
-const statusClass: Record<ServiceHealthCardsProps["status"], string> = {
+const statusClass: Record<ServiceSummary["status"], string> = {
   Running: "service-health-card__status--running",
   Degraded: "service-health-card__status--degraded",
   Down: "service-health-card__status--down",
@@ -11,7 +11,7 @@ export default function ServiceHealthCard({
   title,
   service,
   status,
-}: ServiceHealthCardsProps) {
+}: ServiceSummary) {
   return (
     <article className="service-health-card">
       <div className="service-health-card__top">

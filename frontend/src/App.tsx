@@ -1,7 +1,7 @@
 import ServiceHealthGrid from "./components/ServiceHealthGrid";
-import type { ServiceHealthCardsProps } from "./types";
+import type { ServiceSummary } from "./types";
 
-const services: ServiceHealthCardsProps[] = [
+const services: ServiceSummary[] = [
   {
     id: "auth-api",
     title: "Authentication API",
