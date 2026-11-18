@@ -221,7 +221,7 @@ async function routeRequest(
     const timer = setInterval(() => {
       sendEvent(response, "telemetry", { scenario: store.getScenario(), services: store.tick(), generatedAt: new Date().toISOString() });
     }, 5_000);
-    request.once("close", () => clearInterval(timer));
+    response.once("close", () => clearInterval(timer));
     return;
   }
   if (method === "GET" && path === "/api/docs") {
