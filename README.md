@@ -44,4 +44,4 @@ npm run typecheck
 
 Synthetic service metrics, incidents and trace examples are demo data. The request recorder measures real traffic sent to this API, and the GitHub probe makes a real public HTTP request. This starter does not yet connect to PostgreSQL, OpenTelemetry Collector or Azure Monitor.
 
-See [API documentation](docs/api.md) and [architecture](docs/architecture.md).
+See [API documentation](docs/api.md), [architecture](docs/architecture.md), and the [project learning notes](docs/learning/README.md).
