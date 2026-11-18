@@ -61,7 +61,7 @@ export default function ServiceHealthCard({
         </div>
         <div>
           <dt>p95</dt>
-          <dd>{p95LatencyMs} ms</dd>
+          <dd className="service-health-card__metric-value--highlight">{p95LatencyMs} ms</dd>
         </div>
         <div>
           <dt>CPU</dt>
