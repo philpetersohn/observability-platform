@@ -1,18 +1,28 @@
-import { createServer } from "node:http";
-import { handleHealth } from "./routes/health.js";
+import { createApiServer } from "./server.js";
 
 const port = Number(process.env.PORT ?? 3000);
+const host = process.env.HOST ?? "127.0.0.1";
+const app = createApiServer();
 
-const server = createServer((req, res) => {
-  if (req.url === "/health") {
-    handleHealth(req, res);
-    return;
-  }
+const simulationTimer = setInterval(() => {
+  app.telemetryStore.tick();
+}, 5_000);
 
-  res.writeHead(404, { "content-type": "application/json" });
-  res.end(JSON.stringify({ error: "not found" }));
+app.server.listen(port, host, () => {
+  console.log("Observability API listening on http://" + host + ":" + port);
+  console.log("API reference: http://" + host + ":" + port + "/api/docs");
 });
 
-server.listen(port, "localhost", () => {
-  console.log(`backend listening on http://localhost:${port}`);
-});
+function shutdown(signal: string): void {
+  console.log("Received " + signal + "; shutting down gracefully.");
+  clearInterval(simulationTimer);
+  app.server.close((error) => {
+    if (error) {
+      console.error("Error closing HTTP server:", error);
+      process.exitCode = 1;
+    }
+  });
+}
+
+process.once("SIGINT", () => shutdown("SIGINT"));
+process.once("SIGTERM", () => shutdown("SIGTERM"));
