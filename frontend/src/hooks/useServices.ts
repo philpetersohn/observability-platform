@@ -8,20 +8,20 @@ export function useServices() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
 
     setIsLoading(true);
 
-    getServices()
+    getServices(controller.signal)
       .then((response) => {
-        if (cancelled) {
+        if (controller.signal.aborted) {
           return;
         }
         setServices(response.data);
         setError(null);
       })
       .catch((cause: unknown) => {
-        if (cancelled) {
+        if (controller.signal.aborted) {
           return;
         }
         setError(
@@ -29,13 +29,13 @@ export function useServices() {
         );
       })
       .finally(() => {
-        if (!cancelled) {
+        if (!controller.signal.aborted) {
           setIsLoading(false);
         }
       });
 
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, []);
 
