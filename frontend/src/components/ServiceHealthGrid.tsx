@@ -12,13 +12,7 @@ export default function ServiceHealthGrid({
   return (
     <section className="service-health-grid">
       {services.map((service) => (
-        <ServiceHealthCard
-          key={service.id}
-          id={service.id}
-          title={service.title}
-          description={service.description}
-          status={service.status}
-        />
+        <ServiceHealthCard key={service.id} {...service} />
       ))}
     </section>
   );

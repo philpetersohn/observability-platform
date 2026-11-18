@@ -11,6 +11,12 @@ export default function ServiceHealthCard({
   title,
   description,
   status,
+  requestRate,
+  errorRatePct,
+  averageLatencyMs,
+  p95LatencyMs,
+  cpuUsagePct,
+  memoryUsagePct,
 }: ServiceCard) {
   return (
     <article className="service-health-card">
@@ -40,10 +46,32 @@ export default function ServiceHealthCard({
 
       <div className="service-health-card__divider" />
 
-      <p className="service-health-card__hint">
-        Service health
-        <span>Live monitoring</span>
-      </p>
+      <dl className="service-health-card__metrics">
+        <div>
+          <dt>Requests</dt>
+          <dd>{requestRate}/s</dd>
+        </div>
+        <div>
+          <dt>Errors</dt>
+          <dd>{errorRatePct}%</dd>
+        </div>
+        <div>
+          <dt>Avg latency</dt>
+          <dd>{averageLatencyMs} ms</dd>
+        </div>
+        <div>
+          <dt>p95</dt>
+          <dd>{p95LatencyMs} ms</dd>
+        </div>
+        <div>
+          <dt>CPU</dt>
+          <dd>{cpuUsagePct}%</dd>
+        </div>
+        <div>
+          <dt>Memory</dt>
+          <dd>{memoryUsagePct}%</dd>
+        </div>
+      </dl>
     </article>
   );
 }

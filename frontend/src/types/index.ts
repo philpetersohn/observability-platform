@@ -24,4 +24,10 @@ export interface ServiceCard {
   title: string;
   description: string;
   status: StatusType;
+  requestRate: number;
+  errorRatePct: number;
+  averageLatencyMs: number;
+  p95LatencyMs: number;
+  cpuUsagePct: number;
+  memoryUsagePct: number;
 }

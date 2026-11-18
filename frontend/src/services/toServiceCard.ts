@@ -13,5 +13,11 @@ export function toServiceCard(service: ServiceSummary): ServiceCard {
     title: service.name,
     description: service.description,
     status: statusLabels[service.status],
+    requestRate: service.requestRate,
+    errorRatePct: service.errorRatePct,
+    averageLatencyMs: service.averageLatencyMs,
+    p95LatencyMs: service.p95LatencyMs,
+    cpuUsagePct: service.cpuUsagePct,
+    memoryUsagePct: service.memoryUsagePct,
   };
 }

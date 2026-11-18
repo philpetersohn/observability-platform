@@ -123,24 +123,41 @@
 
 .service-health-card__divider {
   height: 1px;
-  background: linear-gradient(90deg, rgb(133 161 190 / 22%), rgb(133 161 190 / 5%));
+  background: linear-gradient(
+    90deg,
+    rgb(133 161 190 / 22%),
+    rgb(133 161 190 / 5%)
+  );
 }
 
-.service-health-card__hint {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.service-health-card__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 10px;
   margin: 0;
-  color: #c3d0df;
-  font-size: 13px;
-  font-weight: 550;
 }
 
-.service-health-card__hint span {
+.service-health-card__metrics div {
+  min-width: 0;
+}
+
+.service-health-card__metrics dt {
+  margin: 0;
   color: #7f93aa;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 550;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.service-health-card__metrics dd {
+  margin: 4px 0 0;
+  overflow: hidden;
+  color: #f4f7fb;
+  font-size: 14px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 520px) {
