@@ -144,7 +144,7 @@
 .service-health-card__metrics dt {
   margin: 0;
   color: #7f93aa;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 550;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -158,6 +158,10 @@
   font-weight: 650;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.service-health-card__metric-value--highlight {
+  color: #79bdff !important;
 }
 
 @media (max-width: 520px) {
