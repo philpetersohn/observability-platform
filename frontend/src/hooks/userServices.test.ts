@@ -51,4 +51,19 @@ describe("useServices", () => {
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBeNull();
   });
+
+  it("reports an error when the first request fails", async () => {
+    vi.mocked(getServices).mockRejectedValue(new Error("Service unavailable"));
+
+    const { result } = renderHook(() => useServices());
+
+    await waitFor(() => {
+      expect(result.current.error).toBe("Service unavailable");
+    });
+
+    expect(result.current.services).toEqual([]);
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.isRefreshing).toBe(false);
+    expect(result.current.lastSuccessfulRefresh).toBeNull();
+  });
 });
