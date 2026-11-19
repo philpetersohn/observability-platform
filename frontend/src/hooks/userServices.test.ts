@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { getServices } from "../services/serviceApi";
 import type { ServiceSummary } from "../types/services";
@@ -65,5 +65,31 @@ describe("useServices", () => {
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isRefreshing).toBe(false);
     expect(result.current.lastSuccessfulRefresh).toBeNull();
+  });
+
+  it("preserves existing services when refresh fails", async () => {
+    vi.mocked(getServices).mockResolvedValueOnce({
+      data: services,
+      meta: { count: services.length, generatedAt: "2026-11-19T17:00:00.000Z" },
+    });
+
+    const { result } = renderHook(() => useServices());
+
+    await waitFor(() => {
+      expect(result.current.services).toHaveLength(2);
+    });
+
+    vi.mocked(getServices).mockRejectedValueOnce(new Error("Refresh failed"));
+
+    await act(async () => {
+      await result.current.refresh();
+    });
+
+    await waitFor(() => {
+      expect(result.current.error).toBe("Refresh failed");
+    });
+
+    expect(result.current.services).toEqual(services);
+    expect(result.current.isRefreshing).toBe(false);
   });
 });
