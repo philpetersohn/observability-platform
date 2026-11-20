@@ -41,6 +41,7 @@ function hookState(
     error: null,
     isRefreshing: false,
     lastSuccessfulRefresh: null,
+    dataGeneratedAt: null,
     refresh: vi.fn(),
     ...overrides,
   };
@@ -79,11 +80,13 @@ describe("Dashboard", () => {
       hookState({
         services,
         lastSuccessfulRefresh: "2026-11-19T17:00:00.000Z",
+        dataGeneratedAt: "2026-11-19T16:59:00.000Z",
       }),
     );
 
     render(<Dashboard />);
 
+    expect(screen.getByText("Data generated at:", { exact: false })).toBeTruthy();
     expect(
       screen.getByRole("heading", { name: "Authentication API" }),
     ).toBeTruthy();
