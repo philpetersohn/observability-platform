@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getServices } from "../services/serviceApi";
 import type { ServiceSummary } from "../types/services";
 
+/** Owns the service request lifecycle; components consume its state, not fetch directly. */
 export function useServices() {
   const [services, setServices] = useState<ServiceSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,15 +12,21 @@ export function useServices() {
     string | null
   >(null);
 
+  const [dataGeneratedAt, setDataGeneratedAt] = useState<string | null>(null);
+
+  // Refs survive renders without triggering a render themselves.
   const abortRef = useRef<AbortController | null>(null);
+  // Tracks whether the initial successful load completed.
   const hasLoadedRef = useRef(false);
 
+  // Cancel the previous request so an older response cannot replace newer data.
   const refresh = useCallback(async () => {
     abortRef.current?.abort();
 
     const controller = new AbortController();
     abortRef.current = controller;
 
+    // Refreshing retains the previous service cards; initial loading does not.
     if (hasLoadedRef.current) {
       setIsRefreshing(true);
     } else {
@@ -34,6 +41,7 @@ export function useServices() {
       }
 
       setServices(response.data);
+      setDataGeneratedAt(response.meta.generatedAt);
       setError(null);
       setLastSuccessfulRefresh(new Date().toISOString());
       hasLoadedRef.current = true;
@@ -53,6 +61,7 @@ export function useServices() {
     }
   }, []);
 
+  // Fetch on mount; abort pending work when the effect is cleaned up.
   useEffect(() => {
     void refresh();
 
@@ -67,6 +76,7 @@ export function useServices() {
     error,
     isRefreshing,
     lastSuccessfulRefresh,
+    dataGeneratedAt,
     refresh,
   };
 }
