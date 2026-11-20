@@ -62,6 +62,7 @@ describe("useServices", () => {
     expect(result.current.services).toEqual(services);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBeNull();
+    expect(result.current.dataGeneratedAt).toBe("2026-11-19T17:00:00.000Z");
   });
 
   it("reports an error when the first request fails", async () => {
@@ -77,6 +78,7 @@ describe("useServices", () => {
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isRefreshing).toBe(false);
     expect(result.current.lastSuccessfulRefresh).toBeNull();
+    expect(result.current.dataGeneratedAt).toBeNull();
   });
 
   it("preserves existing services when refresh fails", async () => {
@@ -102,6 +104,7 @@ describe("useServices", () => {
     });
 
     expect(result.current.services).toEqual(services);
+    expect(result.current.dataGeneratedAt).toBe("2026-11-19T17:00:00.000Z");
     expect(result.current.isRefreshing).toBe(false);
   });
 
@@ -159,6 +162,7 @@ describe("useServices", () => {
     });
 
     expect(result.current.services).toEqual(updatedServices);
+    expect(result.current.dataGeneratedAt).toBe("2026-11-19T17:05:00.000Z");
     expect(result.current.lastSuccessfulRefresh).not.toBe(firstRefresh);
     expect(result.current.lastSuccessfulRefresh).toBe(
       "2026-11-19T17:05:00.000Z",

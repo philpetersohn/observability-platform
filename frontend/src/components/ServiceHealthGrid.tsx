@@ -6,6 +6,7 @@ interface ServiceHealthGridProps {
   services: ServiceCard[];
 }
 
+// Presentational grid: renders cards without owning requests or loading state.
 export default function ServiceHealthGrid({
   services,
 }: ServiceHealthGridProps) {

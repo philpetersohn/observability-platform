@@ -7,6 +7,7 @@ const statusLabels: Record<ServiceStatus, StatusType> = {
   down: "Down",
 };
 
+// Keep API data shape independent from presentational component props.
 export function toServiceCard(service: ServiceSummary): ServiceCard {
   return {
     id: service.id,
