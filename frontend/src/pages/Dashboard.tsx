@@ -3,6 +3,7 @@ import { useServices } from "../hooks/useServices";
 import { toServiceCard } from "../services/toServiceCard";
 import "./Dashboard.css";
 
+// Display timestamps in the viewer's local timezone.
 function formatRefreshTime(timestamp: string): string {
   return new Date(timestamp).toLocaleString();
 }
@@ -14,13 +15,16 @@ export default function Dashboard() {
     error,
     isRefreshing,
     lastSuccessfulRefresh,
+    dataGeneratedAt,
     refresh,
   } = useServices();
 
+  // The first request has no cached data to display.
   if (isLoading && services.length === 0) {
     return <p>Loading services…</p>;
   }
 
+  // A failed initial load needs a retry action rather than stale-data UI.
   if (error && services.length === 0) {
     return (
       <section className="dashboard">
@@ -54,6 +58,14 @@ export default function Dashboard() {
           )}
         </p>
       </header>
+      <p className="dashboard__timestamp">
+        Data generated at: {dataGeneratedAt ? (
+          <time dateTime={dataGeneratedAt}>{formatRefreshTime(dataGeneratedAt)}</time>
+        ) : (
+          "—"
+        )}
+      </p>
+      {/* After a failed refresh, retain the last successful service snapshot. */}
       {error ? (
         <p className="dashboard__warning" role="alert">
           {error}. Showing the last successful data.
